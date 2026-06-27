@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="checkout-wrapper">
+
+        <h2 class="steam-page-title mb-1">Complete Your Purchase</h2>
+        <p class="text-muted mb-4">Review your order and confirm below.</p>
+
+        <!-- Order Summary -->
+        <div class="order-summary mb-4">
+            <div class="order-game-row">
+                <img src="{{ url_for('static', filename='Game_Picture/' + game.image) }}"
+                     alt="{{ game.name }}" class="order-game-img">
+                <div class="order-game-info">
+                    <div class="order-game-name">{{ game.name }}</div>
+                    <div class="order-game-genre">{{ game.genre }}</div>
+                    {% if game.age_rating > 0 %}
+                    <div class="order-age-note">⚠️ Requires age {{ game.age_rating }}+</div>
+                    {% endif %}
+                </div>
+                <div class="order-price">RM {{ "%.2f"|format(final_price) }}</div>
+            </div>
+        </div>
+
+        <!-- Wallet info -->
+        <div class="wallet-summary mb-4">
+            <div class="wallet-row">
+                <span>Your Wallet Balance</span>
+                <span class="wallet-val">RM {{ "%.2f"|format(session['wallet']) }}</span>
+            </div>
+            <div class="wallet-row">
+                <span>Game Price</span>
+                <span class="wallet-val deduct">− RM {{ "%.2f"|format(final_price) }}</span>
+            </div>
+            <div class="wallet-row total-row">
+                <span>Balance After Purchase</span>
+                <span class="wallet-val {% if session['wallet'] - final_price < 0 %}insufficient{% endif %}">
+                    RM {{ "%.2f"|format(session['wallet'] - final_price) }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Age verification form -->
+        <form method="POST" action="/checkout/{{ game.id }}">
+            {% if game.age_rating > 0 %}
+            <div class="mb-3">
+                <label class="steam-label">Confirm Your Age</label>
+                <div class="age-verify-note">This game is rated {{ game.age_rating }}+. Please confirm your age to proceed.</div>
+                <input type="number" name="age" class="form-control steam-input mt-2"
+                       placeholder="Enter your age" min="1" max="100"
+                       value="{{ session.get('age', '') }}" required>
+            </div>
+            {% else %}
+            <input type="hidden" name="age" value="{{ session.get('age', 18) }}">
+            {% endif %}
+
+            <div class="checkout-actions">
+                <button class="btn btn-steam-buy">💳 Confirm Purchase</button>
+                <a href="/game/{{ game.id }}" class="btn btn-steam-outline">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
