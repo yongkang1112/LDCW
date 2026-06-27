@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Setup wallet/age if not logged in -->
+{% if 'username' not in session %}
+<div class="container mt-4">
+    <div class="setup-card">
+        <h4>👋 Welcome to Steam Store</h4>
+        <p class="text-muted mb-3">Set up your account to start shopping.</p>
+        <form method="POST" action="/setup" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label steam-label">Your Name</label>
+                <input type="text" name="username" class="form-control steam-input" placeholder="Enter username" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label steam-label">Wallet Balance (RM)</label>
+                <input type="number" name="wallet" class="form-control steam-input" placeholder="e.g. 200" min="0" step="0.01" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label steam-label">Your Age</label>
+                <input type="number" name="age" class="form-control steam-input" placeholder="e.g. 18" min="1" max="100" required>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-steam-blue w-100">Start</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+<!-- Featured Deep Discounts section -->
+<div class="container mt-5">
+    <div class="section-header">
+        <h3 class="section-title">Featured Deep Discounts</h3>
+        <p class="section-sub">Especially great deals on some of the all-time greats</p>
+        <a href="/store" class="btn btn-steam-outline-sm">See All</a>
+    </div>
+
+    <div class="row mt-3">
+        {% for game in featured %}
+        <div class="col-md-4 mb-4">
+            <a href="/game/{{ game.id }}" class="game-card-mini-link">
+            <div class="game-card-mini">
+                <div class="game-card-art">
+                    <img src="{{ url_for('static', filename='Game_Picture/' + game.image) }}"
+                         alt="{{ game.name }}" class="game-card-img">
+                    {% if game.discount > 0 %}
+                    <span class="discount-tag">-{{ game.discount }}%</span>
+                    {% endif %}
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-title">{{ game.name }}</div>
+                    <div class="game-card-genre text-muted">{{ game.genre }}</div>
+                    <div class="game-card-price">
+                        {% if game.discount > 0 %}
+                        <span class="original-price">RM {{ "%.2f"|format(game.price) }}</span>
+                        <span class="sale-price">RM {{ "%.2f"|format(game.price * (1 - game.discount/100)) }}</span>
+                        {% else %}
+                        <span class="sale-price">RM {{ "%.2f"|format(game.price) }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
