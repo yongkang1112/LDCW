@@ -693,9 +693,13 @@ a:hover { color: #fff; }
     color: #fff;
     border: none;
     border-radius: 3px;
-    padding: 5px 12px;
-    font-size: 12px;
+    padding: 8px 20px;
+    font-size: 14px;
     font-weight: 600;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: background 0.15s;
 }
 
