@@ -1,0 +1,90 @@
+[
+    {
+        "id": 1,
+        "name": "Meccha Chameleon",
+        "genre": "Party game",
+        "price": 15.90,
+        "age_rating": 13,
+        "rating": 4.8,
+        "discount": 0,
+        "image": "Meccha_Chameleon.png",
+        "description": "Draw and hide! A fun party game where deception and creativity collide."
+    },
+    {
+        "id": 2,
+        "name": "ARK: Survival Ascended",
+        "genre": "Survival",
+        "price": 53.75,
+        "age_rating": 16,
+        "rating": 4.2,
+        "discount": 75,
+        "image": "ARK.png",
+        "description": "Tame dinosaurs and survive on a mysterious island."
+    },
+    {
+        "id": 3,
+        "name": "Ghostwire: Tokyo",
+        "genre": "Action / Horror",
+        "price": 89.90,
+        "age_rating": 18,
+        "rating": 4.5,
+        "discount": 60,
+        "image": "Ghostwire_Tokyo.png",
+        "description": "Fight supernatural forces in a mysterious Tokyo."
+    },
+    {
+        "id": 4,
+        "name": "Stardew Valley",
+        "genre": "Simulation / Farming",
+        "price": 29.90,
+        "age_rating": 0,
+        "rating": 4.9,
+        "discount": 0,
+        "image": "Stardew_Valley.png",
+        "description": "Build your dream farm and explore a charming valley."
+    },
+    {
+        "id": 5,
+        "name": "Cyberpunk 2077",
+        "genre": "Action / RPG",
+        "price": 149.90,
+        "age_rating": 18,
+        "rating": 4.6,
+        "discount": 50,
+        "image": "Cyberpunk_2077.png",
+        "description": "An open-world adventure in the dark future city of Night City."
+    },
+    {
+        "id": 6,
+        "name": "Hollow Knight",
+        "genre": "Metroidvania",
+        "price": 24.90,
+        "age_rating": 0,
+        "rating": 4.9,
+        "discount": 0,
+        "image": "Hollow_Knight.png",
+        "description": "Explore an ancient underground kingdom in this acclaimed platformer."
+    },
+    {
+        "id": 7,
+        "name": "Elden Ring",
+        "genre": "Action / RPG",
+        "price": 229.90,
+        "age_rating": 18,
+        "rating": 4.7,
+        "discount": 20,
+        "image": "Elden_Ring.png",
+        "description": "Explore the Lands Between in this brutal, rewarding fantasy epic."
+    },
+    {
+        "id": 8,
+        "name": "Minecraft",
+        "genre": "Sandbox / Adventure",
+        "price": 79.90,
+        "age_rating": 0,
+        "rating": 4.8,
+        "discount": 0,
+        "image": "Minecraft.png",
+        "description": "Build, survive, and explore in a limitless blocky world."
+    }
+]
