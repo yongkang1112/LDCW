@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="steam-page-title mb-1">My Library</h2>
+    <p class="text-muted mb-4">Games you own</p>
+
+    {% if not library %}
+    <div class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h4>Your library is empty</h4>
+        <p>You haven't purchased any games yet.</p>
+        <a href="/store" class="btn btn-steam-blue">Browse Store</a>
+    </div>
+    {% else %}
+    <div class="row">
+        {% for game in library %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="game-card owned">
+                <div class="game-art">
+                    <img src="{{ url_for('static', filename='Game_Picture/' + game.image) }}"
+                         alt="{{ game.name }}" class="game-art-img">
+                    <span class="owned-badge">✔ Owned</span>
+                </div>
+                <div class="game-info">
+                    <div class="game-name">{{ game.name }}</div>
+                    <div class="game-genre">{{ game.genre }}</div>
+                    <div class="game-rating">⭐ {{ game.rating }}/5.0</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

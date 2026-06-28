@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="success-wrapper text-center">
+        <div class="success-icon">✅</div>
+        <h1 class="success-title">Purchase Successful!</h1>
+        <p class="success-sub">{{ game.name }} has been added to your library.</p>
+
+        <div class="success-game-img-wrap mx-auto mt-3 mb-4">
+            <img src="{{ url_for('static', filename='Game_Picture/' + game.image) }}"
+                 alt="{{ game.name }}" class="success-game-img">
+        </div>
+
+        <div class="receipt-card mx-auto mt-2">
+            <div class="receipt-row">
+                <span>Game</span>
+                <span>{{ game.name }}</span>
+            </div>
+            <div class="receipt-row">
+                <span>Genre</span>
+                <span>{{ game.genre }}</span>
+            </div>
+            <div class="receipt-row">
+                <span>Amount Paid</span>
+                <span class="receipt-price">RM {{ "%.2f"|format(amount_paid) }}</span>
+            </div>
+            <div class="receipt-row">
+                <span>Remaining Wallet</span>
+                <span class="receipt-wallet">RM {{ "%.2f"|format(remaining) }}</span>
+            </div>
+            <div class="receipt-row">
+                <span>Order ID</span>
+                <span class="receipt-id">{{ order_id }}</span>
+            </div>
+        </div>
+
+        <div class="success-actions mt-4">
+            <a href="/library" class="btn btn-steam-blue">Go to Library</a>
+            <a href="/store" class="btn btn-steam-outline">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

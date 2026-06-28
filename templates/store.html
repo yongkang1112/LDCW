@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Page title -->
+    <div class="mb-4">
+        <h2 class="steam-page-title">All Games</h2>
+        <p class="text-muted">{{ games|length }} results found</p>
+    </div>
+
+    <!-- Filter Panel -->
+    <form method="GET" action="/store" class="filter-panel mb-4">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="steam-label">Search</label>
+                <input type="text" name="keyword" class="form-control steam-input"
+                       placeholder="Search games..." value="{{ keyword }}">
+            </div>
+            <div class="col-md-3">
+                <label class="steam-label">Genre</label>
+                <select class="form-select steam-input" name="genre">
+                    <option value="">All Genres</option>
+                    <option value="Action / RPG" {% if genre=="Action / RPG" %}selected{% endif %}>Action / RPG</option>
+                    <option value="Action / Horror" {% if genre=="Action / Horror" %}selected{% endif %}>Action / Horror</option>
+                    <option value="Simulation / Farming" {% if genre=="Simulation / Farming" %}selected{% endif %}>Simulation</option>
+                    <option value="Survival" {% if genre=="Survival" %}selected{% endif %}>Survival</option>
+                    <option value="Metroidvania" {% if genre=="Metroidvania" %}selected{% endif %}>Metroidvania / Indie</option>
+                    <option value="Sandbox / Adventure" {% if genre=="Sandbox / Adventure" %}selected{% endif %}>Sandbox</option>
+                    <option value="Party game" {% if genre=="Party game" %}selected{% endif %}>Party Game</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="steam-label">Max Budget (RM)</label>
+                <input type="number" name="budget" class="form-control steam-input"
+                       placeholder="e.g. 100" value="{{ budget }}" min="0" step="0.01">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-steam-blue w-100">🔍 Filter</button>
+            </div>
+            <div class="col-md-1">
+                <a href="/store" class="btn btn-steam-outline w-100">✕</a>
+            </div>
+        </div>
+    </form>
+
+    <!-- Games Grid -->
+    {% if games|length == 0 %}
+    <div class="empty-state">
+        <div class="empty-icon">🎮</div>
+        <h4>No games found</h4>
+        <p>Try adjusting your filters or budget.</p>
+        <a href="/store" class="btn btn-steam-blue">Browse All Games</a>
+    </div>
+    {% else %}
+    <div class="row">
+        {% for game in games %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="game-card">
+                <div class="game-art">
+                    <img src="{{ url_for('static', filename='Game_Picture/' + game.image) }}"
+                         alt="{{ game.name }}" class="game-art-img">
+                    {% if game.discount > 0 %}
+                    <span class="discount-badge">-{{ game.discount }}%</span>
+                    {% endif %}
+                    {% if game.age_rating >= 18 %}
+                    <span class="age-badge">18+</span>
+                    {% elif game.age_rating >= 13 %}
+                    <span class="age-badge age-13">13+</span>
+                    {% else %}
+                    <span class="age-badge age-all">ALL</span>
+                    {% endif %}
+                </div>
+                <div class="game-info">
+                    <div class="game-name">{{ game.name }}</div>
+                    <div class="game-genre">{{ game.genre }}</div>
+                    <div class="game-rating">⭐ {{ game.rating }}/5.0</div>
+                    <div class="game-footer">
+                        <div class="price-block">
+                            {% if game.discount > 0 %}
+                            <div class="price-original">RM {{ "%.2f"|format(game.price) }}</div>
+                            <div class="price-sale">RM {{ "%.2f"|format(game.price * (1 - game.discount/100)) }}</div>
+                            {% else %}
+                            <div class="price-sale">RM {{ "%.2f"|format(game.price) }}</div>
+                            {% endif %}
+                        </div>
+                        <a href="/game/{{ game.id }}" class="btn btn-steam-add">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
