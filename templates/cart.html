@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="steam-page-title mb-1">Your Cart</h2>
+    <p class="text-muted mb-4">Games ready to purchase</p>
+
+    {% if not cart_games %}
+    <div class="empty-state">
+        <div class="empty-icon">🛒</div>
+        <h4>Your cart is empty</h4>
+        <p>Add some games to get started.</p>
+        <a href="/store" class="btn btn-steam-blue">Browse Store</a>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-lg-8">
+            {% for game in cart_games %}
+            <div class="card mb-3 border-0 shadow-sm">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='Game_Picture/' + game.image) }}" alt="{{ game.name }}" class="img-fluid rounded-start" style="height: 140px; width: 100%; object-fit: cover;">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ game.name }}</h5>
+                            <p class="card-text text-muted mb-1">{{ game.genre }}</p>
+                            <p class="card-text fw-bold">RM {{ "%.2f"|format(game.price * (1 - game.discount/100) if game.discount > 0 else game.price) }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-end pe-3">
+                        <form method="post" action="/remove_from_cart/{{ game.id }}">
+                            <button class="btn btn-outline-danger btn-sm">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">Order Summary</h5>
+                    <div class="d-flex justify-content-content-between mb-2">
+                        <span>Items</span>
+                        <span>{{ cart_games|length }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold fs-5">
+                        <span>Total</span>
+                        <span>RM {{ "%.2f"|format(total) }}</span>
+                    </div>
+                    <form method="post" action="/checkout_cart">
+                        <button class="btn btn-steam-buy w-100 mt-3">Purchase All</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

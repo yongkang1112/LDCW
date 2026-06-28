@@ -85,7 +85,12 @@
                             <div class="price-sale">RM {{ "%.2f"|format(game.price) }}</div>
                             {% endif %}
                         </div>
-                        <a href="/game/{{ game.id }}" class="btn btn-steam-add">View</a>
+                        <div class="d-flex gap-2">
+                            <form method="post" action="/add_to_cart/{{ game.id }}">
+                                <button class="btn btn-steam-add">Add to Cart</button>
+                            </form>
+                            <a href="/game/{{ game.id }}" class="btn btn-steam-outline">View</a>
+                        </div>
                     </div>
                 </div>
             </div>

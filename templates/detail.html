@@ -49,7 +49,10 @@
             </div>
 
             <div class="detail-actions">
-                <a href="/checkout/{{ game.id }}" class="btn btn-steam-buy">Add to Cart & Buy</a>
+                <form method="post" action="/add_to_cart/{{ game.id }}" class="d-inline">
+                    <button class="btn btn-steam-buy">Add to Cart</button>
+                </form>
+                <a href="/checkout/{{ game.id }}" class="btn btn-steam-outline">Buy Now</a>
                 <a href="/store" class="btn btn-steam-outline">← Back to Store</a>
             </div>
         </div>
